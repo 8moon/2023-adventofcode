@@ -29,7 +29,8 @@ func part1() {
 	var total int = 0
 	var line_number strings.Builder
 
-	file, error := os.Open("input_part1.txt")
+	file, error := os.Open("example_part1.txt")
+//	file, error := os.Open("input_part1.txt")
 	if error != nil {
 		fmt.Println("Error opening file:", error)
 		return
@@ -53,8 +54,11 @@ func part1() {
 			}
 		}
 		number, _ := strconv.Atoi(line_number.String())
+//		fmt.Println("string number: " + line_number.String())
+		line_number.Reset()
 		total = total + number
+//		fmt.Printf("total: %v\n", total)
 	}
-	fmt.Println("string number: " + line_number.String())
+//	fmt.Println("string number: " + line_number.String())
 	fmt.Printf("total: %v\n", total)
 }
