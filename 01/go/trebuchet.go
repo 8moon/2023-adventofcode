@@ -6,26 +6,17 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"text/scanner"
 	"unicode"
 )
 
 func main() {
 	//fmt.Println("Hello World!")
 	part1()
+	part2()
 }
 
 func part1() {
-	/*
-	Example input:
-	1abc2
-	pqr3stu8vwx
-	a1b2c3d4e5f
-	treb7uchet
-	Result:
-	12, 38, 15, 77
-	total: 
-	142
-	*/
 	var total int = 0
 	var line_number strings.Builder
 
@@ -61,4 +52,23 @@ func part1() {
 	}
 //	fmt.Println("string number: " + line_number.String())
 	fmt.Printf("total: %v\n", total)
+}
+
+func part2() {
+	file, error := os.Open("example_part2.txt")
+//	file, error := os.Open("input_part2.txt")
+	if error != nil {
+		fmt.Println("Error opening file:", error)
+		return
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+	}
+	if error := scanner.Err(); error != nil {
+		fmt.Println("Error reading file:", error)
+	}
 }
