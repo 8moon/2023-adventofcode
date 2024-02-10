@@ -55,6 +55,20 @@ func part1() {
 }
 
 func part2() {
+	// Create Map as dictionary to map int numbers to string numbers
+	dictionnary := map[int]string {
+		1:"one",
+		2:"two",
+		3:"three",
+		4:"four",
+		5:"five",
+		6:"six",
+		7:"seven",
+		8:"eight",
+		9:"nine",
+	}
+	// Create Map to find first string number in line
+	index := make(map[int]string)
 	file, error := os.Open("example_part2.txt")
 //	file, error := os.Open("input_part2.txt")
 	if error != nil {
@@ -66,7 +80,17 @@ func part2() {
 	scanner := bufio.NewScanner(file)
 
 	for scanner.Scan() {
+		// Find first and last number from each line and add it to total sum
 		line := scanner.Text()
+		// run through dictionnary to find place of each word in line
+		for key := range dictionnary {
+			index[strings.Index(line, dictionnary[key])] = dictionnary[key]
+		}
+		// delete not found
+		delete(index, -1)
+		// strings.replace string number with int number
+		// find first and last number in string 
+		// build number and add it to total sum
 	}
 	if error := scanner.Err(); error != nil {
 		fmt.Println("Error reading file:", error)
