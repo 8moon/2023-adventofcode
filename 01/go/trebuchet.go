@@ -67,8 +67,6 @@ func part2() {
 		8:"eight",
 		9:"nine",
 	}
-	// Create Map to find first string number in line
-	index := make(map[int]string)
 	file, error := os.Open("example_part2.txt")
 //	file, error := os.Open("input_part2.txt")
 	if error != nil {
@@ -82,6 +80,8 @@ func part2() {
 	for scanner.Scan() {
 		// Find first and last number from each line and add it to total sum
 		line := scanner.Text()
+		// Create Map to find first string number in line
+		index := make(map[int]string)
 		// run through dictionnary to find place of each word in line
 		for key := range dictionnary {
 			index[strings.Index(line, dictionnary[key])] = dictionnary[key]
