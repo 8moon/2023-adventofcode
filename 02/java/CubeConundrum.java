@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,15 +23,27 @@ public class CubeConundrum {
          * Question: Which games are possible? -> ID sum of possible games
          */
         // Map for cubes
+        /*
         Map<String, Integer> cubesMap = Map.of(
             "red", 0,
             "green", 0,
             "blue", 0
-        );
+        ); 
+        
+        Map<String, Integer> cubesMap = new HashMap<>() {{
+            put("red", 0);
+            put("green", 0);
+            put("blue", 0);
+        }};
+        */
+        Map<String, Integer> cubesMap = new HashMap<>();
+        cubesMap.put("red", 0);
+        cubesMap.put("green", 0);
+        cubesMap.put("blue", 0);
         
         // Read input file with lines to list
         List<String> input = new ArrayList<>();
-        try (BufferedReader br = Files.newBufferedReader(Paths.get("example1.txt"))) {
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("02\\java\\example1.txt"))) {
             input = br.lines().collect(Collectors.toList());
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -39,12 +52,15 @@ public class CubeConundrum {
         // Iterate through each line
         int total = input.stream()
             .map(m -> {
+                /*
                 cubesMap.forEach((key, value) -> {
                     cubesMap.put(key, 0);
                 });
+                */
+                //cubesMap.clear();
                 ArrayList<Integer> validGameIdList = new ArrayList<>();
                 // Create substring for each reveal
-                String reveals = m.substring(m.indexOf(":")-1).trim();
+                String reveals = m.substring(m.indexOf(":") + 1).trim();
                 String[] reveal = reveals.split(";");
                 Arrays.stream(reveal).forEach(revealString -> {
                     // 3 blue, 4 red, 2 green -> get each colour value, if colour not present value = 0
@@ -70,13 +86,28 @@ public class CubeConundrum {
                 if (cubesMap.get("red") <= 12 && cubesMap.get("blue") <= 14 && cubesMap.get("green") <= 13) {
                     // Add game id to map as int
                     String gameId = m.substring(4, m.indexOf(":")).trim();
-                    validGameIdList.add(Integer.parseInt(gameId));
-                }
-                return Integer.parseInt(m.substring(4, m.indexOf(":")).trim());
+                    //validGameIdList.add(Integer.parseInt(gameId));
+                    return Integer.parseInt(gameId);
+                } else return 0;
+                //return Integer.parseInt(m.substring(4, m.indexOf(":")).trim());
+                /*
+                int validGameIdSum = 0;
+                validGameIdList.forEach(key -> {
+                    validGameIdSum =+ validGameIdList.get(key);
+                });
+                */
+                //int validGameIdSum = validGameIdList.stream().mapToInt(Integer::intValue).sum();
+                //return validGameIdSum;
+                // validGameIdSum stays 0 after first run through
+                /*
+                 * Thoughts:
+                 * 1 Return Statement in if check
+                 * 2 External map and forget return, print map sum external
+                 */
             })
             .mapToInt(m -> m)
             .sum();
-        System.out.println("total sum" + total);
+        System.out.println("total sum: " + total);
     }
 
 }
